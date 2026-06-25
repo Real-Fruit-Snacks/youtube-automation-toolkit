@@ -16,7 +16,7 @@ The **YouTube Automation Toolkit** is a powerful Chrome Extension (Manifest V3) 
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
 - **Premium UI/UX:** Dual-mode tabbed layout with a glassmorphic sliding indicator. Custom icons, live stats counters, a gradient progress bar, and monospaced console logs.
 - **Background Execution:** Automation loops run in the active YouTube tab context. You can safely close the extension popup without stopping the automation. Reopening the popup instantly syncs progress.
@@ -32,11 +32,11 @@ The **YouTube Automation Toolkit** is a powerful Chrome Extension (Manifest V3) 
 
 ---
 
-## 🚀 Installation (Developer Mode)
+## Installation (Developer Mode)
 
 Since this extension interacts deeply with YouTube's DOM, it is provided as an unpacked developer extension.
 
-1. Download the latest release `.zip` from the [Releases](#) tab and extract it, or clone this repository.
+1. Download the latest release `.zip` from the Releases tab and extract it, or clone this repository.
 2. Open Google Chrome and navigate to `chrome://extensions/`.
 3. Enable **Developer mode** using the toggle switch in the top-right corner.
 4. Click the **Load unpacked** button in the top-left corner.
@@ -45,7 +45,7 @@ Since this extension interacts deeply with YouTube's DOM, it is provided as an u
 
 ---
 
-## 📖 How to Use
+## How to Use
 
 ### Mode 1: Watch Later Cleaner
 1. Navigate to your YouTube **Watch Later** playlist: `https://www.youtube.com/playlist?list=WL`
@@ -59,7 +59,7 @@ Since this extension interacts deeply with YouTube's DOM, it is provided as an u
 
 ---
 
-## ⚙️ Configuration Settings
+## Configuration Settings
 
 To customize the automation, expand the **Configuration** section in the popup:
 
@@ -71,13 +71,13 @@ To customize the automation, expand the **Configuration** section in the popup:
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 - **YouTube is showing rate limits/errors:** YouTube might temporarily restrict account actions if you unsubscribe or delete too fast. Pause the process, increase the **Action Delay** slider to `1500ms` or higher, wait a minute, and click resume.
 - **The script is stuck or not responding:** Reload the YouTube tab (`F5`) to re-initialize the automation context, then reopen the popup and click **Start** again.
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
