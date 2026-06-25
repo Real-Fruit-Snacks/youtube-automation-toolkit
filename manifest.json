@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Automation Toolkit",
+  "version": "1.1",
+  "description": "Bulk remove all videos from your Watch Later playlist and mass-unsubscribe from channels automatically.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "YouTube Automation Toolkit"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.youtube.com/playlist?list=WL",
+        "https://*.youtube.com/feed/channels"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

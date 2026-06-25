@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Automation Toolkit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-area">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" fill="url(#logoGrad)"/>
+          <path d="M9.75 15.02l5.75-3.02-5.75-3v6z" fill="#FFFFFF"/>
+          <defs>
+            <linearGradient id="logoGrad" x1="1" y1="4" x2="23" y2="20" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#ec4899"/>
+              <stop offset="1" stop-color="#8b5cf6"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="title-meta">
+          <h1>YT Automation</h1>
+          <span class="subtitle">Toolkit Controls</span>
+        </div>
+      </div>
+      <div class="status-pill status-idle" id="status-badge">
+        <span class="status-dot"></span>
+        <span class="status-text" id="status-text">Idle</span>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="tab-bar">
+      <button class="tab-btn active" id="tab-wl">
+        <span>Watch Later</span>
+      </button>
+      <button class="tab-btn" id="tab-subs">
+        <span>Subscriptions</span>
+      </button>
+      <div class="tab-indicator" id="tab-indicator"></div>
+    </nav>
+
+    <!-- Main Dashboard -->
+    <main class="app-main">
+      <!-- Dynamic Wrong Page Warning -->
+      <div class="warning-card hidden" id="page-warning">
+        <div class="warning-icon">⚠️</div>
+        <div class="warning-content">
+          <h3 id="warning-title">Wrong Page</h3>
+          <p id="warning-desc">Please open YouTube's Watch Later playlist to run this tool.</p>
+          <button class="btn btn-secondary btn-sm" id="btn-goto-page">Go to Playlist</button>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label" id="label-removed">Removed</span>
+          <span class="stat-value" id="stat-removed">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label" id="label-skipped">Skipped</span>
+          <span class="stat-value" id="stat-skipped">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label" id="label-remaining">Remaining</span>
+          <span class="stat-value" id="stat-remaining">--</span>
+        </div>
+      </div>
+
+      <!-- Progress Section -->
+      <div class="progress-section">
+        <div class="progress-header">
+          <span class="progress-label" id="label-progress">Cleanup Progress</span>
+          <span class="progress-percentage" id="progress-percent">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-bar" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls-container">
+        <button class="btn btn-primary" id="btn-start" title="Start Process">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          <span id="btn-start-label">Start</span>
+        </button>
+        <button class="btn btn-secondary" id="btn-pause" disabled title="Pause Process">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+          </svg>
+          <span>Pause</span>
+        </button>
+        <button class="btn btn-danger" id="btn-stop" disabled title="Stop Process">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 6h12v12H6z"/>
+          </svg>
+          <span>Stop</span>
+        </button>
+      </div>
+
+      <!-- Expandable Settings Accordion -->
+      <details class="settings-accordion">
+        <summary class="settings-summary">
+          <span class="summary-title">
+            <svg class="settings-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            Configuration
+          </span>
+          <span class="summary-chevron"></span>
+        </summary>
+        <div class="settings-content">
+          <div class="setting-group">
+            <div class="setting-label-row">
+              <label for="input-interval">Action Delay</label>
+              <span class="setting-value-badge" id="val-interval">800ms</span>
+            </div>
+            <input type="range" id="input-interval" min="400" max="3000" step="50" value="800" class="slider">
+            <span class="setting-hint">Longer delays are safer and prevent rate limits.</span>
+          </div>
+
+          <div class="setting-group">
+            <label for="input-target-text" id="label-target-text">Remove Button Label</label>
+            <input type="text" id="input-target-text" placeholder="Remove from Watch later" class="text-input">
+            <span class="setting-hint" id="setting-hint-text">The extension will auto-detect this, but you can override it if you use a non-English YouTube locale.</span>
+          </div>
+
+          <div class="setting-group-row">
+            <label class="toggle-container">
+              <input type="checkbox" id="input-autoscroll" checked>
+              <span class="toggle-slider"></span>
+            </label>
+            <div class="toggle-label-desc">
+              <span class="toggle-title">Auto-Scroll Page</span>
+              <span class="setting-hint" id="setting-hint-scroll">Automatically scroll down to load more items.</span>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- Logs Console -->
+      <section class="logs-section">
+        <div class="logs-header">
+          <span>Activity Console</span>
+          <button class="btn-clear-logs" id="btn-clear-logs" title="Clear console log">Clear</button>
+        </div>
+        <div class="logs-console" id="log-console">
+          <div class="log-line system">Waiting to start...</div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <span>v1.1 &bull; Select a tab and click Start</span>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
