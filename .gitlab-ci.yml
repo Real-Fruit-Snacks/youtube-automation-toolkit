@@ -1,0 +1,13 @@
+# GitLab CI: lets this repository be mirrored or self-hosted on GitLab with no
+# extra setup. Push to GitLab and the pipeline below runs automatically.
+
+package:
+  stage: build
+  image: alpine:latest
+  script:
+    - mkdir -p dist
+    - cp manifest.json content.js popup.html popup.js popup.css verify_subs.js dist/
+    - cp -r icons dist/icons
+  artifacts:
+    paths:
+      - dist
